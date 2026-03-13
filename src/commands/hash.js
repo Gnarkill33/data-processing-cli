@@ -10,7 +10,21 @@ const hashOptions = {
  save: { type: "boolean", default: false },
 };
 
-const availableAlgorithms = ["sha256", "md5", "sha512"];
+export const availableAlgorithms = ["sha256", "md5", "sha512"];
+
+export const calculateHash = (filePath, algorithm) => {
+ return new Promise((resolve, reject) => {
+  const hash = createHash(algorithm);
+  const readableStream = createReadStream(filePath);
+
+  readableStream.on("data", (chunk) => hash.update(chunk));
+  readableStream.on("end", () => resolve(hash.digest("hex")));
+  readableStream.on("error", () => {
+   console.log("Operation failed");
+   reject();
+  });
+ });
+};
 
 export const runHashCommand = async (args) => {
  const { values } = parseCommandArgs(args, hashOptions);
@@ -29,35 +43,22 @@ export const runHashCommand = async (args) => {
  }
 
  try {
-  const hash = createHash(values.algorithm);
-  const readableStream = createReadStream(sourceFilePath);
+  const hexHash = await calculateHash(sourceFilePath, values.algorithm);
 
-  readableStream.on("error", () => {
-   console.log("Operation failed");
-  });
+  if (values.save) {
+   const writableStream = createWriteStream(targetFilePath);
 
-  readableStream.on("data", (chunk) => {
-   hash.update(chunk);
-  });
+   writableStream.on("error", () => {
+    console.log("Operation failed");
+   });
 
-  readableStream.on("end", () => {
-   const hexHash = hash.digest("hex");
-
-   if (values.save) {
-    const writableStream = createWriteStream(targetFilePath);
-
-    writableStream.on("error", () => {
-     console.log("Operation failed");
-    });
-
-    writableStream.write(hexHash, () => {
-     writableStream.end();
-     console.log("Hash saved");
-    });
-   } else {
-    console.log(`${values.algorithm}: ${hexHash}`);
-   }
-  });
+   writableStream.write(hexHash, () => {
+    writableStream.end();
+    console.log("Hash saved");
+   });
+  } else {
+   console.log(`${values.algorithm}: ${hexHash}`);
+  }
  } catch {
   console.log("Operation failed");
  }
