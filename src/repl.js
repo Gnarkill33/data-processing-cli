@@ -4,6 +4,7 @@ import { showWorkingDirectory } from "./utils/pathResolver.js";
 import { runNavCommand } from "./navigation.js";
 import { runCountCommand } from "./commands/count.js";
 import { runCsvToJsonCommand } from "./commands/csvToJson.js";
+import { runJsonToCsvCommand } from "./commands/jsonToCsv.js";
 
 const commandHandlers = {
  up: () => runNavCommand("up", []),
@@ -12,6 +13,7 @@ const commandHandlers = {
 
  count: (args) => runCountCommand(args),
  "csv-to-json": (args) => runCsvToJsonCommand(args),
+ "json-to-csv": (args) => runJsonToCsvCommand(args),
 };
 
 export const startCLI = () => {
