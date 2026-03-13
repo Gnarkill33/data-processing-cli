@@ -58,7 +58,7 @@ export const runCsvToJsonCommand = async (args) => {
      bufferResult[header] = buffervalues[index] || "";
     });
 
-    const jsonLine = JSON.stringify(bufferResult) + ",\n";
+    const jsonLine = JSON.stringify(bufferResult);
     jsonLines.push(jsonLine);
 
     const finalJson = "[\n" + jsonLines.join("") + "\n]";
