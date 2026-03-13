@@ -6,6 +6,7 @@ import { runCountCommand } from "./commands/count.js";
 import { runCsvToJsonCommand } from "./commands/csvToJson.js";
 import { runJsonToCsvCommand } from "./commands/jsonToCsv.js";
 import { runHashCommand } from "./commands/hash.js";
+import { runHashCompareCommand } from "./commands/hashCompare.js";
 
 const commandHandlers = {
  up: () => runNavCommand("up", []),
@@ -14,6 +15,7 @@ const commandHandlers = {
 
  count: (args) => runCountCommand(args),
  hash: (args) => runHashCommand(args),
+ "hash-compare": (args) => runHashCompareCommand(args),
  "csv-to-json": (args) => runCsvToJsonCommand(args),
  "json-to-csv": (args) => runJsonToCsvCommand(args),
 };
