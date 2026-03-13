@@ -5,6 +5,7 @@ import { runNavCommand } from "./navigation.js";
 import { runCountCommand } from "./commands/count.js";
 import { runCsvToJsonCommand } from "./commands/csvToJson.js";
 import { runJsonToCsvCommand } from "./commands/jsonToCsv.js";
+import { runHashCommand } from "./commands/hash.js";
 
 const commandHandlers = {
  up: () => runNavCommand("up", []),
@@ -12,6 +13,7 @@ const commandHandlers = {
  ls: () => runNavCommand("ls", []),
 
  count: (args) => runCountCommand(args),
+ hash: (args) => runHashCommand(args),
  "csv-to-json": (args) => runCsvToJsonCommand(args),
  "json-to-csv": (args) => runJsonToCsvCommand(args),
 };
