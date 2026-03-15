@@ -7,6 +7,8 @@ import { runCsvToJsonCommand } from "./commands/csvToJson.js";
 import { runJsonToCsvCommand } from "./commands/jsonToCsv.js";
 import { runHashCommand } from "./commands/hash.js";
 import { runHashCompareCommand } from "./commands/hashCompare.js";
+import { runEncryptCommand } from "./commands/encrypt.js";
+import { runDecryptCommand } from "./commands/decrypt.js";
 
 const commandHandlers = {
  up: () => runNavCommand("up", []),
@@ -15,6 +17,8 @@ const commandHandlers = {
 
  count: (args) => runCountCommand(args),
  hash: (args) => runHashCommand(args),
+ encrypt: (args) => runEncryptCommand(args),
+ decrypt: (args) => runDecryptCommand(args),
  "hash-compare": (args) => runHashCompareCommand(args),
  "csv-to-json": (args) => runCsvToJsonCommand(args),
  "json-to-csv": (args) => runJsonToCsvCommand(args),
